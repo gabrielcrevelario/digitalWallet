@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalWallet.Aplication", "DigitalWallet.Aplication\DigitalWallet.Aplication.csproj", "{6DF69DF5-618D-497C-BBDC-5157E3225D23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalWallet.Domain", "DigitalWallet.Domain\DigitalWallet.Domain.csproj", "{10D2C87B-0CE3-45A5-8E96-426ACA04E0F4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{548E3858-E6CB-4E8D-AF4D-DFA705A5A00E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalWallet.Infrastructure", "DigitalWallet.Infrastructure\DigitalWallet.Infrastructure.csproj", "{9C00EF7F-5387-4A9F-B298-7493811ACFC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wallet-api", "wallet-api\wallet-api.csproj", "{C0AAA6B0-25E9-406A-9408-54D3B3103B81}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6DF69DF5-618D-497C-BBDC-5157E3225D23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DF69DF5-618D-497C-BBDC-5157E3225D23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DF69DF5-618D-497C-BBDC-5157E3225D23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DF69DF5-618D-497C-BBDC-5157E3225D23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10D2C87B-0CE3-45A5-8E96-426ACA04E0F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10D2C87B-0CE3-45A5-8E96-426ACA04E0F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10D2C87B-0CE3-45A5-8E96-426ACA04E0F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10D2C87B-0CE3-45A5-8E96-426ACA04E0F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C00EF7F-5387-4A9F-B298-7493811ACFC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C00EF7F-5387-4A9F-B298-7493811ACFC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C00EF7F-5387-4A9F-B298-7493811ACFC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C00EF7F-5387-4A9F-B298-7493811ACFC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0AAA6B0-25E9-406A-9408-54D3B3103B81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0AAA6B0-25E9-406A-9408-54D3B3103B81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0AAA6B0-25E9-406A-9408-54D3B3103B81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0AAA6B0-25E9-406A-9408-54D3B3103B81}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6DF69DF5-618D-497C-BBDC-5157E3225D23} = {548E3858-E6CB-4E8D-AF4D-DFA705A5A00E}
+		{10D2C87B-0CE3-45A5-8E96-426ACA04E0F4} = {548E3858-E6CB-4E8D-AF4D-DFA705A5A00E}
+	EndGlobalSection
+EndGlobal
