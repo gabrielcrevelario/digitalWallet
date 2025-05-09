@@ -112,3 +112,11 @@ Clone o repositório em sua máquina local:
 ```bash
 git clone https://github.com/gabrielcrevelario/digitalWallet
 cd digitalWallet
+```
+```bash
+docker-compose up --build
+```
+### acesse:
+```bash
+http://localhost:5000/swagger/index.html
+```
