@@ -2,16 +2,16 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
-COPY *.sln ./
-COPY DigitalWallet.Domain/*.csproj ./DigitalWallet.Domain/
-COPY DigitalWallet.Aplication/*.csproj ./DigitalWallet.Aplication/
-COPY DigitalWallet.Infrastructure/*.csproj ./DigitalWallet.Infrastructure/
-COPY wallet-api/*.csproj ./wallet-api/
+COPY wallet-api.sln ./
+COPY src/DigitalWallet.Domain/*.csproj ./src/DigitalWallet.Domain/
+COPY src/DigitalWallet.Aplication/*.csproj ./src/DigitalWallet.Aplication/
+COPY src/DigitalWallet.Infrastructure/*.csproj ./src/DigitalWallet.Infrastructure/
+COPY src/wallet-api/*.csproj ./src/wallet-api/
 
 RUN dotnet restore
 
-COPY . .
-WORKDIR /app/wallet-api
+COPY . ./
+WORKDIR /app/src/wallet-api
 RUN dotnet publish -c Release -o /out
 
 # Etapa 2: runtime
