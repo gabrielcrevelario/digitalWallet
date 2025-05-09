@@ -14,12 +14,16 @@ using FluentValidation;
 using DigitalWallet.Infrastructure.data;
 using System;
 using DigitalWallet.Domain.service;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using DigitalWallet.Aplication.Profiles;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Registra o AutoMapper
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
+
 
 // Adiciona os serviços de controle e documentação
 builder.Services.AddControllers();
@@ -28,17 +32,58 @@ builder.Services.AddEndpointsApiExplorer();
 // Configuração do Swagger
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Wallet API", Version = "v1" });
+
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Title = "Wallet API",
-        Version = "v1"
+        Description = "Insira o token JWT assim: Bearer {seu_token}",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
     });
 });
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = false; // apenas para dev
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"])
+        )
+    };
+});
 
 builder.Services.AddDbContext<DigitalWalletContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+        options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IWalletRepository, WalletRepository>();
@@ -53,6 +98,7 @@ builder.Services.AddScoped<IValidator<RegisterUserRequest>, RegisterUserRequestV
 builder.Services.AddScoped<IValidator<CreateWalletRequest>, CreateWalletRequestValidator>();
 builder.Services.AddScoped<IValidator<TransferRequest>, TransferRequestValidator>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IEncryptionService, EncryptionService>();
 
 var app = builder.Build();
 

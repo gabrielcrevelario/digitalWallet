@@ -14,7 +14,7 @@ namespace DigitalWallet.Aplication.interfaces
         Task<Transaction> TransferAsync(Transaction transaction);
         Task<TransactionResponse> CreateAsync(TransferRequest transferRequest);
         Task<TransactionResponse> GetByIdAsync(Guid id);
-        Task<List<Transaction>> GetUserTransactionsAsync(Guid userId, DateTime? startDate, DateTime? endDate);
+        Task<List<TransactionResponse>> GetUserTransactionsAsync(Guid userId, DateTime? startDate, DateTime? endDate);
 
     }
 }

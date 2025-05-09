@@ -29,8 +29,8 @@ namespace DigitalWallet.Aplication.service
 
         public async Task<Transaction> TransferAsync(Transaction transaction)
         {
-            var fromWallet = await _walletRepository.GetByIdAsync(transaction.FromWalletId);
-            var toWallet = await _walletRepository.GetByIdAsync(transaction.ToWalletId);
+            var fromWallet = await _walletRepository.FirstOrDefaultAsync(f => f.Id == transaction.FromWalletId);
+            var toWallet = await _walletRepository.FirstOrDefaultAsync(f => f.Id == transaction.ToWalletId);
 
             if (fromWallet == null || toWallet == null)
                 throw new ArgumentException("Invalid wallets");
@@ -38,9 +38,11 @@ namespace DigitalWallet.Aplication.service
             await _transactionRepository.AddAsync(transaction);
             return transaction;
         }
-        public async Task<List<Transaction>> GetUserTransactionsAsync(Guid userId, DateTime? startDate, DateTime? endDate)
+        public async Task<List<TransactionResponse>> GetUserTransactionsAsync(Guid userId, DateTime? startDate, DateTime? endDate)
         {
-            return await _transactionRepository.GetByUserAsync(userId, startDate, endDate);
+            var transactions = await _transactionRepository.GetByUserAsync(userId, startDate, endDate);
+            var response = _mapper.Map<List<TransactionResponse>>(transactions);
+            return response;
         }
 
         public async Task<TransactionResponse> CreateAsync(TransferRequest transferRequest)
@@ -53,7 +55,7 @@ namespace DigitalWallet.Aplication.service
 
         public async Task<TransactionResponse> GetByIdAsync(Guid id)
         {
-            var transaction = await _transactionRepository.GetByIdAsync(id);
+            var transaction = await _transactionRepository.FirstOrDefaultAsync(f => f.Id == id);
             var transactionResponse = _mapper.Map<TransactionResponse>(transaction);
             return transactionResponse;
         }

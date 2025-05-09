@@ -13,8 +13,8 @@ namespace DigitalWallet.Infrastructure.data
         {
             if (context.Users.Any()) return; // Já populado
 
-            var user1 = new User("Alice", "alice@email.com", "Senha@123");
-            var user2 = new User("Bob", "bob@email.com", "Senha@123");
+            var user1 = new User("Alice", "alice@email.com", "FeIUc0sDfMjh2MJz6N3kD9ssV8sUkXlM7VcuMvFMFgA=");
+            var user2 = new User("Bob", "bob@email.com", "FeIUc0sDfMjh2MJz6N3kD9ssV8sUkXlM7VcuMvFMFgA=");
             user1.Id = Guid.NewGuid();
             user2.Id = Guid.NewGuid();
 

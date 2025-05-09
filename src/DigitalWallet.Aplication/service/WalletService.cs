@@ -56,7 +56,7 @@ namespace DigitalWallet.Aplication.service
 
         public async Task DepositAsync(Guid walletId, decimal amount)
         {
-            var wallet = await _walletRepository.GetByIdAsync(walletId);
+            var wallet = await _walletRepository.FirstOrDefaultAsync(f => f.Id == walletId);
             if (wallet != null)
             {
                 wallet.Deposit(amount);
@@ -66,7 +66,7 @@ namespace DigitalWallet.Aplication.service
 
         public async Task WithdrawAsync(Guid walletId, decimal amount)
         {
-            var wallet = await _walletRepository.GetByIdAsync(walletId);
+            var wallet = await _walletRepository.FirstOrDefaultAsync(f => f.Id == walletId);
             if (wallet != null)
             {
                 wallet.Withdraw(amount);

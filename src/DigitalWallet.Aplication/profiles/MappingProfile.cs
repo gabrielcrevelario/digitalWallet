@@ -14,17 +14,17 @@ namespace DigitalWallet.Aplication.Profiles
     {
         public MappingProfile()
         {
+            CreateMap<RegisterUserRequest, User>()
+             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+             .ForMember(dest => dest.PasswordHash, opt => opt.MapFrom(src => src.PasswordHash))
+             .ForMember(dest => dest.Wallets, opt => opt.Ignore()); 
 
-            // Requests -> Entidades
-            CreateMap<CreateWalletRequest, Wallet>()
-                .ConstructUsing(r => new Wallet(r.UserId, r.InitialBalance));
+             CreateMap<LoginRequest, User>();
+            CreateMap<User, UserResponse>(); 
 
-            // Entidades -> Responses
             CreateMap<Wallet, WalletResponse>();
             CreateMap<TransferRequest, Transaction>();
             CreateMap<Transaction, TransactionResponse>();
-            CreateMap<RegisterUserRequest, User>();
-            CreateMap<User, UserResponse>();
         }
     }
 }

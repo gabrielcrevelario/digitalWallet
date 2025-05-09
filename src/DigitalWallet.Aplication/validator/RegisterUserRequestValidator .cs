@@ -12,15 +12,15 @@ namespace DigitalWallet.Aplication.Validator
     {
         public RegisterUserRequestValidator()
         {
-            RuleFor(x => x.Username)
-                .NotEmpty().WithMessage("Username é obrigatório.")
-                .MinimumLength(3).WithMessage("Username deve ter no mínimo 3 caracteres.");
+            RuleFor(x => x.Name)
+                .NotEmpty().WithMessage("Nome é obrigatório.")
+                .MinimumLength(3).WithMessage("Nome deve ter no mínimo 3 caracteres.");
 
             RuleFor(x => x.Email)
                 .NotEmpty().WithMessage("Email é obrigatório.")
                 .EmailAddress().WithMessage("Email inválido.");
 
-            RuleFor(x => x.Password)
+            RuleFor(x => x.PasswordHash)
                 .NotEmpty().WithMessage("Senha é obrigatória.")
                 .MinimumLength(6).WithMessage("A senha deve ter no mínimo 6 caracteres.");
         }

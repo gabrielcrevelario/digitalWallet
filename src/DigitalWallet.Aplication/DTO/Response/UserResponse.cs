@@ -12,7 +12,7 @@ namespace DigitalWallet.Aplication.DTO.Response
         public Guid Id { get; private set; }
         public string Name { get; private set; }
         public string Email { get; private set; }
-        public String PasswordHash { get; private set; }
+        public string PasswordHash { get; private set; }
 
     }
 }

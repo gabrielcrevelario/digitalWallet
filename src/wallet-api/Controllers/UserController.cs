@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace wallet_api.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
@@ -24,7 +25,6 @@ namespace wallet_api.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize]
         public async Task<IActionResult> GetUser(Guid id)
         {
             var user = await _userService.GetUserByIdAsync(id);

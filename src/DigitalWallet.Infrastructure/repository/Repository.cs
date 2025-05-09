@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DigitalWallet.Domain.repository;
+using System.Linq.Expressions;
 
 namespace DigitalWallet.Infrastructure.repository
 {
@@ -23,9 +24,9 @@ namespace DigitalWallet.Infrastructure.repository
             return await _dbSet.ToListAsync();
         }
 
-        public async Task<T> GetByIdAsync(Guid id)
+        public async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
         {
-            return await _dbSet.FindAsync(id);
+            return await _context.Set<T>().FirstOrDefaultAsync(predicate);
         }
 
         public async Task AddAsync(T entity)

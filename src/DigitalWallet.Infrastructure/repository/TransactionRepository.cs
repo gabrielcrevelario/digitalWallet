@@ -21,9 +21,14 @@ namespace DigitalWallet.Infrastructure.repository
 
         public async Task<List<Transaction>> GetByUserAsync(Guid userId, DateTime? startDate, DateTime? endDate)
         {
+            if (startDate.HasValue && startDate.Value.Kind == DateTimeKind.Unspecified)
+                startDate = DateTime.SpecifyKind(startDate.Value, DateTimeKind.Utc);
+
+            if (endDate.HasValue && endDate.Value.Kind == DateTimeKind.Unspecified)
+                endDate = DateTime.SpecifyKind(endDate.Value, DateTimeKind.Utc);
             return await _context.Transactions
         .Where(t =>
-            (t.FromWallet.UserId == userId || t.ToWallet.UserId == userId) &&
+            //(t.FromWallet.UserId == userId || t.ToWallet.UserId == userId) &&
             (!startDate.HasValue || t.CreatedAt >= startDate.Value) &&
             (!endDate.HasValue || t.CreatedAt <= endDate.Value)
         )

@@ -11,8 +11,9 @@ namespace DigitalWallet.Aplication.DTO.Response
         public Guid Id { get; set; }
 
         public Guid FromWalletId { get; set; }
+        public Guid FromUserId { get; set; }
         public Guid ToWalletId { get; set; }
-
+        public Guid ToUserId { get; set; }
         public decimal Amount { get; set; }
         public DateTime Timestamp { get; set; }
     }

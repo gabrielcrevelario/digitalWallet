@@ -19,13 +19,15 @@ namespace DigitalWallet.Aplication.service
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IEncryptionService _encryptionService;
         private readonly IValidator<RegisterUserRequest> _userValidator;
         private readonly IMapper _mapper;
 
-        public UserService(IUserRepository userRepository, IValidator<RegisterUserRequest> userValidator, IMapper mapper)
+        public UserService(IUserRepository userRepository, IValidator<RegisterUserRequest> userValidator, IMapper mapper, IEncryptionService encryptionService)
         {
             _userRepository = userRepository;
             _userValidator = userValidator;
+            _encryptionService = encryptionService;
             _mapper = mapper;
         }
 
@@ -34,7 +36,9 @@ namespace DigitalWallet.Aplication.service
             var validation = _userValidator.Validate(registerUserRequest);   
             if(validation.IsValid)
             {
+
                 var user = _mapper.Map<User>(registerUserRequest);
+                user.PasswordHash = _encryptionService.Encrypt(user.PasswordHash);
                 await _userRepository.AddAsync(user);
                 return _mapper.Map<UserResponse>(user);
             } throw new Exception(validation.Errors.FirstOrDefault().ErrorMessage);
@@ -48,7 +52,7 @@ namespace DigitalWallet.Aplication.service
 
         public async Task<User> GetUserByIdAsync(Guid id)
         {
-            return await _userRepository.GetByIdAsync(id);
+            return await _userRepository.FirstOrDefaultAsync(f => f.Id == id);
         }
     }
 }
