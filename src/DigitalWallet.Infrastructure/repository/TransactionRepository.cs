@@ -27,8 +27,10 @@ namespace DigitalWallet.Infrastructure.repository
             if (endDate.HasValue && endDate.Value.Kind == DateTimeKind.Unspecified)
                 endDate = DateTime.SpecifyKind(endDate.Value, DateTimeKind.Utc);
             return await _context.Transactions
+          .Include(t => t.FromWallet).ThenInclude(w => w.User)
+    .Include(t => t.ToWallet).ThenInclude(w => w.User)
         .Where(t =>
-            //(t.FromWallet.UserId == userId || t.ToWallet.UserId == userId) &&
+           (t.FromWallet.UserId == userId || t.ToWallet.UserId == userId) &&
             (!startDate.HasValue || t.CreatedAt >= startDate.Value) &&
             (!endDate.HasValue || t.CreatedAt <= endDate.Value)
         )
